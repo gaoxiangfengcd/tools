@@ -63,6 +63,9 @@ const pages = [
   ["/new", "New Online Tools - QuickTools", "Try newly added tools for PDF conversion, PDF compression, CSV to JSON, color conversion, and SEO meta tags."],
   ["/blog", "Tool Guides and Tips - QuickTools", "Read practical guides for calculators, PDF tools, image optimization, developer utilities, and SEO workflows."],
   ["/about", "About QuickTools", "QuickTools is a free online toolbox for fast, private browser-based calculations, conversions, and file utilities."],
+  ["/privacy-policy", "Privacy Policy - QuickTools", "Read the QuickTools privacy policy for analytics, cookies, advertising, uploaded files, and contact information."],
+  ["/terms", "Terms of Service - QuickTools", "Review the terms for using QuickTools calculators, converters, image tools, PDF tools, and developer utilities."],
+  ["/contact", "Contact QuickTools", "Contact QuickTools for feedback, bug reports, feature requests, privacy questions, and advertising inquiries."],
   ...categories.map(([slug, title, description]) => [`/category/${slug}`, `${title} - QuickTools`, description]),
   ...tools.map(([slug, title, description]) => [`/tools/${slug}`, `${title} - QuickTools`, description])
 ];

@@ -37,6 +37,9 @@ button { cursor: pointer; }
 .install-card svg { color: #6b4df6; background: #f0ecff; width: 54px; height: 54px; padding: 12px; border-radius: 14px; }
 .install-card p { margin: 0; color: #67718e; font-size: 13px; }
 .install-card button, .center-link { border: 0; color: #fff; background: linear-gradient(135deg, #754cff, #5c3df2); border-radius: 10px; min-height: 42px; padding: 0 18px; font-weight: 750; }
+.legal-links { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
+.legal-links button { border: 1px solid #e1e5ee; border-radius: 999px; background: #fff; color: #59647e; padding: 7px 11px; font-size: 13px; }
+.legal-links button:hover { border-color: #c8bdff; color: #5a39f5; background: #f6f4ff; }
 .main-area { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 26px; padding: 24px 36px 34px; }
 .home-content { min-width: 0; }
 .page-title { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
@@ -84,6 +87,11 @@ h1, h2, h3, p { margin: 0; }
 .empty-state strong, .info-card h3 { color: #16203c; font-size: 20px; }
 .info-card { padding: 38px; }
 .info-card svg, .empty-state svg { color: #6b4df6; background: #f0ecff; width: 56px; height: 56px; padding: 13px; border-radius: 14px; }
+.content-page { max-width: 900px; align-content: start; justify-items: start; text-align: left; line-height: 1.65; }
+.content-page h3 { font-size: 26px; }
+.content-page h4 { margin: 14px 0 0; color: #17203c; font-size: 16px; }
+.content-page p { color: #4f5b75; }
+.content-page a { color: #5c3df2; font-weight: 750; }
 .right-rail { display: grid; align-content: start; gap: 18px; }
 .rail-card { padding: 18px; display: grid; gap: 12px; }
 .rail-card h3 { font-size: 16px; margin-bottom: 6px; }
@@ -156,6 +164,7 @@ pre.error, .warning { color: #a33d18; }
   .category-row { min-height: 38px; border: 1px solid #e5e7f0; background: #fff; }
   .tool { width: 100%; margin-left: 0; background: rgba(255,255,255,.72); border: 1px solid #edf0f6; }
   .install-card { display: none; }
+  .legal-links { margin-top: 10px; padding-bottom: 8px; }
   .main-area { padding: 18px 20px 28px; }
   .feature-strip, .recent-grid { grid-template-columns: 1fr 1fr; }
   .tool-grid { grid-template-columns: 1fr; }
