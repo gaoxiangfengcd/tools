@@ -59,6 +59,7 @@ const categories = [
 
 const pages = [
   ["/", "QuickTools - Free Online Calculators, PDF, Image and Developer Tools", "Use free online tools for PDF conversion, image compression, calculators, text utilities, JSON formatting, QR codes, and SEO meta tags."],
+  ["/all-tools", "All Online Tools - QuickTools", "Browse every QuickTools calculator, converter, image utility, PDF tool, work tool, and developer tool."],
   ["/popular", "Popular Tools - QuickTools", "Explore popular online tools including PDF to Word, image compressor, QR code generator, JSON formatter, and word counter."],
   ["/new", "New Online Tools - QuickTools", "Try newly added tools for PDF conversion, PDF compression, CSV to JSON, color conversion, and SEO meta tags."],
   ["/blog", "Tool Guides and Tips - QuickTools", "Read practical guides for calculators, PDF tools, image optimization, developer utilities, and SEO workflows."],
