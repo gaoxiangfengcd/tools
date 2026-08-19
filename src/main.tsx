@@ -121,7 +121,7 @@ function toolPath(tool: Tool) {
 }
 
 function stateFromPath() {
-  const path = window.location.pathname;
+  const path = window.location.pathname.length > 1 ? window.location.pathname.replace(/\/$/, "") : window.location.pathname;
   if (path.startsWith("/tools/")) {
     return { active: tools.find((tool) => tool.id === path.replace("/tools/", "")) || null, mode: "categories" as PageMode, cat: "All" as Category | "All" };
   }
