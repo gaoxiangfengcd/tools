@@ -36,7 +36,7 @@ import pdfWorkerUrl from "pdfjs-dist/build/pdf.worker.min.js?url";
 import { Document, Packer, Paragraph, TextRun } from "docx";
 import { PDFDocument } from "pdf-lib";
 import QRCode from "qrcode";
-import { initAnalytics, trackToolOpen } from "./analytics";
+import { initAnalytics, trackPageView, trackToolOpen } from "./analytics";
 import "./styles.css";
 
 type Category = "Finance" | "Work" | "Developer" | "Image" | "PDF";
@@ -624,8 +624,10 @@ function App() {
   })).filter((group) => group.items.length > 0), [visible]);
   const openTool = (tool: Tool) => {
     setActive(tool);
-    updatePath(toolPath(tool));
+    const path = toolPath(tool);
+    updatePath(path);
     document.title = `${tool.name} - QuickTools`;
+    trackPageView(path);
     trackToolOpen(tool.name, tool.category);
   };
   const showHome = (nextMode: PageMode = "categories", nextCat: Category | "All" = "All") => {
@@ -635,6 +637,7 @@ function App() {
     const path = nextMode === "categories" && nextCat !== "All" ? `/category/${nextCat.toLowerCase()}` : nextMode === "categories" ? "/" : `/${nextMode}`;
     updatePath(path);
     document.title = "QuickTools - Finance, Work, Developer and Image Tools";
+    trackPageView(path);
   };
   useEffect(() => {
     const syncRoute = () => {
@@ -643,6 +646,7 @@ function App() {
       setMode(next.mode);
       setCat(next.cat);
       document.title = next.active ? `${next.active.name} - QuickTools` : "QuickTools - Finance, Work, Developer and Image Tools";
+      trackPageView();
     };
     window.addEventListener("popstate", syncRoute);
     return () => window.removeEventListener("popstate", syncRoute);
