@@ -6,28 +6,14 @@ declare global {
 }
 
 const GA_ID = import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined;
-let initialized = false;
 
 export function initAnalytics() {
-  if (!GA_ID || GA_ID === "G-XXXXXXXXXX" || initialized) return;
-  initialized = true;
-
   window.dataLayer ||= [];
-  window.gtag = function gtag(...args: unknown[]) {
-    window.dataLayer?.push(args);
-  };
-
-  const script = document.createElement("script");
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-  document.head.appendChild(script);
-
-  window.gtag("js", new Date());
-  window.gtag("config", GA_ID, {
-    anonymize_ip: true,
-    send_page_view: false
-  });
-  trackPageView();
+  if (!window.gtag) {
+    window.gtag = function gtag(...args: unknown[]) {
+      window.dataLayer?.push(args);
+    };
+  }
 }
 
 export function trackPageView(path = window.location.pathname + window.location.search) {
