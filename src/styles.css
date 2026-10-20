@@ -101,6 +101,11 @@ h1, h2, h3, p { margin: 0; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chips button { border: 1px solid #e1e5ee; border-radius: 999px; background: #fff; color: #4b5570; padding: 7px 12px; }
 .tool-workspace { grid-column: 1 / -1; }
+.tool-guide { margin-top: 22px; background: #fff; border: 1px solid #e1e5ee; border-radius: 14px; padding: 20px 22px; display: grid; gap: 8px; }
+.tool-guide h3 { font-size: 18px; margin-top: 8px; }
+.tool-guide h4 { font-size: 15px; }
+.tool-guide p, .tool-guide li { color: #48546b; line-height: 1.55; }
+.tool-guide ol { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
 .tool-header { margin-bottom: 22px; display: grid; gap: 12px; }
 .ghost-btn { width: fit-content; display: inline-flex; align-items: center; gap: 7px; border: 1px solid #e1e4ee; border-radius: 10px; background: #fff; min-height: 38px; padding: 0 12px; color: #5c3df2; font-weight: 750; }
 .eyebrow { color: #6b4df6; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }

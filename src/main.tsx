@@ -53,15 +53,15 @@ type PageMode = "all-tools" | "categories" | "popular" | "new" | "bookmarks" | "
 
 const tools: Tool[] = [
   ["salary", "Salary Calculator", "Finance", "Estimate take-home pay after taxes and deductions."],
-  ["hourly", "Hourly to Salary", "Finance", "Convert hourly pay into annual, monthly, and weekly salary."],
+  ["hourly", "Hourly to Salary Calculator", "Finance", "Hourly to salary calculator for any hourly rate, hours per week, and weeks per year."],
   ["percentage", "Percentage Calculator", "Finance", "Find percentage values, changes, and totals."],
-  ["discount", "Discount Calculator", "Finance", "Calculate sale price and savings."],
+  ["discount", "Discount Calculator", "Finance", "Discount calculator for a price and a percent off. See the sale price and how much you save."],
   ["margin", "Profit Margin Calculator", "Finance", "Work out profit, markup, and margin."],
-  ["roi", "ROI Calculator", "Finance", "Measure return on investment."],
+  ["roi", "ROI Calculator", "Finance", "ROI calculator for an initial investment and a final value. See net return and the ROI percentage."],
   ["compound", "Compound Interest", "Finance", "Forecast savings with recurring contributions."],
   ["loan", "Loan Calculator", "Finance", "Estimate monthly payments and total interest."],
-  ["meeting", "Meeting Cost Calculator", "Work", "Estimate the real cost of a meeting."],
-  ["timezone", "Time Zone Converter", "Work", "Convert a date and time across time zones."],
+  ["meeting", "Meeting Cost Calculator", "Work", "Meeting cost calculator for people, average hourly cost, and duration in minutes."],
+  ["timezone", "UTC to EST Converter", "Work", "UTC to EST converter for a date and time. Eastern Time is EST or EDT, depending on the date."],
   ["hours", "Work Hours Calculator", "Work", "Calculate hours worked between start and end times."],
   ["words", "Word Counter", "Work", "Count words, sentences, and paragraphs."],
   ["chars", "Character Counter", "Work", "Count characters with and without spaces."],
@@ -72,27 +72,27 @@ const tools: Tool[] = [
   ["json-validate", "JSON Validator", "Developer", "Validate JSON and show parse errors."],
   ["jwt", "JWT Decoder", "Developer", "Decode JWT header and payload locally."],
   ["base64", "Base64 Encoder", "Developer", "Encode and decode Base64 text."],
-  ["uuid", "UUID Generator", "Developer", "Generate browser-safe random UUIDs."],
+  ["uuid", "UUID Generator", "Developer", "Online UUID generator for random UUID v4 values. New identifiers are created in your browser."],
   ["regex", "Regex Tester", "Developer", "Test a regular expression against text."],
-  ["timestamp", "Timestamp Converter", "Developer", "Convert Unix timestamps and dates."],
+  ["timestamp", "Unix Date Converter", "Developer", "Unix date converter for timestamps in seconds. See the current Unix time, a local date, and an ISO date."],
   ["url", "URL Encoder", "Developer", "Encode and decode URL strings."],
   ["qr-code", "QR Code Generator", "Developer", "Create downloadable QR codes from text or URLs."],
   ["csv-json", "CSV to JSON", "Developer", "Convert CSV rows into formatted JSON."],
-  ["color", "Color Converter", "Developer", "Convert HEX, RGB, and HSL color values."],
+  ["color", "HEX to RGB Converter", "Developer", "HEX to RGB converter for a hex code. Enter a color and see the RGB and HSL values."],
   ["meta-tags", "Meta Tag Generator", "Developer", "Generate SEO title, description, Open Graph, and Twitter tags."],
   ["compress", "Image Compressor", "Image", "Compress images to JPG or WebP."],
   ["resize", "Image Resizer", "Image", "Resize images by width and height."],
-  ["jpg-png", "JPG -> PNG", "Image", "Convert JPG images to PNG."],
-  ["png-jpg", "PNG -> JPG", "Image", "Convert PNG images to JPG."],
-  ["webp-jpg", "WebP -> JPG", "Image", "Convert WebP images to JPG."],
-  ["heic-jpg", "HEIC -> JPG", "Image", "Convert HEIC when your browser supports decoding it."],
-  ["image-pdf", "Image -> PDF", "Image", "Create a simple PDF from one or more images."],
+  ["jpg-png", "JPG to PNG Converter", "Image", "JPG to PNG converter online. Convert one JPG, or batch convert several, free in your browser."],
+  ["png-jpg", "PNG to JPG Converter", "Image", "How to convert PNG to JPG on a Mac or in any browser. Batch convert several PNG files."],
+  ["webp-jpg", "WebP to JPG Converter", "Image", "WebP to JPG converter free in your browser. Save a WebP as JPG, or batch convert several files."],
+  ["heic-jpg", "HEIC File Convert to JPG", "Image", "HEIC file convert to JPG in your browser. iPhone photos download as a smaller JPEG."],
+  ["image-pdf", "JPG to PDF Converter", "Image", "Combine JPG to PDF in your browser. One JPG becomes one page, and several JPGs merge into one PDF."],
   ["pdf-word", "PDF -> Word", "PDF", "Extract text from a PDF and save it as a Word document."],
   ["pdf-text", "PDF -> Text", "PDF", "Extract readable text from a PDF file."],
   ["pdf-info", "PDF Info", "PDF", "Check page count, title, author, and metadata."],
   ["pdf-merge", "PDF Merge", "PDF", "Combine multiple PDFs into one file."],
   ["pdf-compress", "PDF Compress", "PDF", "Rewrite and optimize a PDF file in your browser."],
-  ["pdf-jpg", "PDF -> JPG", "PDF", "Render PDF pages as downloadable JPG images."]
+  ["pdf-jpg", "PDF to JPG Converter", "PDF", "PDF format to JPG in your browser. Each page downloads as its own JPG file."]
 ].map(([id, name, category, description]) => ({ id, name, category: category as Category, description }));
 
 const categoryMeta = {
@@ -167,7 +167,7 @@ function CopyButton({ text }: { text: string }) {
 }
 
 function FinanceTool({ id }: { id: string }) {
-  const [a, setA] = useState("5000"), [b, setB] = useState("20"), [c, setC] = useState("5"), [d, setD] = useState("12");
+  const [a, setA] = useState(id === "hourly" ? "20" : "5000"), [b, setB] = useState(id === "hourly" ? "40" : "20"), [c, setC] = useState(id === "hourly" ? "52" : "5"), [d, setD] = useState("12");
   const A = +a, B = +b, C = +c, D = +d;
   if (id === "salary") return <Panel inputs={<><Field label="Gross annual salary" value={a} onChange={setA} /><Field label="Tax rate %" value={b} onChange={setB} /><Field label="Annual deductions" value={c} onChange={setC} /></>} result={<Result items={[["Annual take-home", money(A * (1 - B / 100) - C)], ["Monthly", money((A * (1 - B / 100) - C) / 12)], ["Biweekly", money((A * (1 - B / 100) - C) / 26)]]} />} />;
   if (id === "hourly") return <Panel inputs={<><Field label="Hourly rate" value={a} onChange={setA} /><Field label="Hours per week" value={b} onChange={setB} /><Field label="Weeks per year" value={c} onChange={setC} /></>} result={<Result items={[["Annual salary", money(A * B * C)], ["Monthly", money(A * B * C / 12)], ["Weekly", money(A * B)]]} />} />;
@@ -516,7 +516,7 @@ function Output({ title, text, error = false }: { title: string; text: string; e
 }
 
 function Timezone() {
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 16)), [from, setFrom] = useState("Asia/Shanghai"), [to, setTo] = useState("America/New_York");
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 16)), [from, setFrom] = useState("UTC"), [to, setTo] = useState("America/New_York");
   const d = new Date(date);
   return <Panel inputs={<><Field label="Date and time" type="datetime-local" value={date} onChange={setDate} /><Field label="From timezone" value={from} onChange={setFrom} type="text" /><Field label="To timezone" value={to} onChange={setTo} type="text" /></>} result={<Result items={[["Source", d.toLocaleString(undefined, { timeZone: from })], ["Converted", d.toLocaleString(undefined, { timeZone: to })]]} />} />;
 }
@@ -657,9 +657,9 @@ function App() {
   const isInfoMode = mode === "blog" || mode === "about" || mode === "privacy-policy" || mode === "terms" || mode === "contact";
 
   if (active) {
-    const renderer = active.category === "Finance" ? <FinanceTool id={active.id} /> : active.category === "Work" ? <WorkTool id={active.id} /> : active.category === "Developer" ? <DeveloperTool id={active.id} /> : active.category === "Image" ? <ImageTool id={active.id} /> : <PdfTool id={active.id} />;
+    const renderer = active.category === "Finance" ? <FinanceTool key={active.id} id={active.id} /> : active.category === "Work" ? <WorkTool id={active.id} /> : active.category === "Developer" ? <DeveloperTool id={active.id} /> : active.category === "Image" ? <ImageTool id={active.id} /> : <PdfTool id={active.id} />;
     const Icon = categoryMeta[active.category].icon;
-    return <Shell query={query} setQuery={setQuery} cat={cat} setCat={setCat} grouped={grouped} active={active} openTool={openTool} mode={mode} showHome={showHome}><section className="tool-workspace"><header className="tool-header"><button className="ghost-btn" onClick={() => showHome()}><Grid3X3 size={16} /> Categories</button><div><p className="eyebrow">{active.category}</p><h2><Icon size={28} /> {active.name}</h2><p>{active.description}</p></div></header>{renderer}</section></Shell>;
+    return <Shell query={query} setQuery={setQuery} cat={cat} setCat={setCat} grouped={grouped} active={active} openTool={openTool} mode={mode} showHome={showHome}><section className="tool-workspace"><header className="tool-header"><button className="ghost-btn" onClick={() => showHome()}><Grid3X3 size={16} /> Categories</button><div><p className="eyebrow">{active.category}</p><h2><Icon size={28} /> {active.name}</h2><p>{active.description}</p></div></header>{renderer}<ToolGuide id={active.id} /></section></Shell>;
   }
 
   return <Shell query={query} setQuery={setQuery} cat={cat} setCat={setCat} grouped={grouped} active={active} openTool={openTool} mode={mode} showHome={showHome}><section className="home-content"><div className="page-title"><div><h2>{pageTitle}</h2><p>{pageDescription}</p></div><div className="view-tools"><button className="active"><Grid3X3 size={17} /></button><button><List size={17} /></button></div></div>{isInfoMode ? <InfoPage mode={mode} /> : <><label className="wide-search"><Search size={18} /><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search tools..." /></label><div className="filter-row">{["All", "Popular", "New", "Free", "No Sign Up", "AI Powered", "Mobile Friendly"].map((item) => <button className={(item === "All" && mode === "all-tools") || (item === "Popular" && mode === "popular") || (item === "New" && mode === "new") ? "active" : ""} onClick={() => item === "Popular" ? showHome("popular") : item === "New" ? showHome("new") : showHome("all-tools")} key={item}>{item === "Popular" && <Flame size={14} />}{item === "New" && <Sparkles size={14} />}{item}</button>)}</div><SectionTitle title={mode === "categories" && cat === "All" ? "Popular Categories" : cat === "All" ? "All Tools" : `${cat} Tools`} />{cat === "All" && mode === "categories" ? <div className="category-grid">{categories.map((category) => { const meta = categoryMeta[category]; const Icon = meta.icon; const count = tools.filter((tool) => tool.category === category).length; return <button className="category-card" key={category} onClick={() => showHome("categories", category)}><span className="category-icon" style={{ background: meta.soft, color: meta.color }}><Icon size={30} /></span><strong>{category} Tools</strong><small>{count} tools</small><p>{category === "Finance" ? "Calculate salary, loans and returns" : category === "Work" ? "Plan time and improve productivity" : category === "Developer" ? "Format, decode and convert code data" : category === "PDF" ? "Convert, extract and inspect PDF files" : "Edit, convert and optimize images"}</p></button>; })}</div> : <ToolCardGrid tools={visible} openTool={openTool} />}{cat === "All" && mode === "categories" && <button className="center-link" onClick={() => showHome("all-tools")}>View all {tools.length} tools <ArrowRight size={16} /></button>}<SectionTitle title="Recently Added Tools" action="View all new tools" onAction={() => showHome("new")} /><div className="recent-grid">{recent.map((tool) => { const Icon = categoryMeta[tool.category].icon; return <button className="mini-card" key={tool.id} onClick={() => openTool(tool)}><span>New</span><Icon size={23} /><strong>{tool.name}</strong><small>{tool.description}</small></button>; })}</div><div className="feature-strip"><Feature icon={Gift} title="100% Free" text="All tools are completely free" /><Feature icon={Zap} title="No Sign Up Required" text="Use tools instantly" /><Feature icon={ShieldCheck} title="Secure & Private" text="Your data stays in your browser" /><Feature icon={Smartphone} title="Mobile Friendly" text="Works on all devices" /></div></>}</section><RightRail popular={popular} openTool={openTool} showHome={showHome} /></Shell>;
@@ -669,6 +669,52 @@ function Shell({ children, query, setQuery, cat, setCat, grouped, active, openTo
   const topLinks: Array<{ label: string; mode: PageMode }> = [{ label: "All Tools", mode: "all-tools" }, { label: "Categories", mode: "categories" }, { label: "Blog", mode: "blog" }, { label: "About", mode: "about" }, { label: "Contact", mode: "contact" }];
   const quickAction = (label: string) => label === "Popular" ? showHome("popular") : label === "New Tools" ? showHome("new") : label === "Bookmarks" ? showHome("bookmarks") : showHome("all-tools");
   return <div className="app-shell"><nav className="topbar"><button className="logo" onClick={() => showHome()}><span>T</span><strong>Toolly</strong></button><div className="top-links">{topLinks.map((item) => <button className={(item.label === "Categories" ? mode === "categories" && cat === "All" : mode === item.mode) ? "active" : ""} onClick={() => showHome(item.mode)} key={item.label}>{item.label}</button>)}</div><div className="top-actions"><button className="round-btn" title="Theme"><Moon size={18} /></button><label className="top-search"><Search size={17} /><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search tools..." /></label><button className="favorite-btn" onClick={() => showHome("bookmarks")}><Star size={16} /> Favorites</button></div></nav><div className="layout"><aside className="sidebar"><h3>Categories</h3><div className="quick-menu">{sidebarItems.map((item) => { const Icon = item.icon; const isActive = (item.label === "All Tools" && mode === "all-tools") || (item.label === "Popular" && mode === "popular") || (item.label === "New Tools" && mode === "new") || (item.label === "Bookmarks" && mode === "bookmarks"); return <button className={isActive ? "active" : ""} key={item.label} onClick={() => quickAction(item.label)}><Icon size={17} /><span>{item.label}</span><small>{item.count}</small></button>; })}</div><div className="divider" /><div className="tool-list">{grouped.map((group) => { const MetaIcon = categoryMeta[group.category].icon; return <section className="tool-section" key={group.category}><button className={cat === group.category ? "category-row active" : "category-row"} onClick={() => showHome("categories", group.category)}><MetaIcon size={17} /><span>{group.category}</span><small>{group.items.length}</small></button>{group.items.map((tool) => <a href={toolPath(tool)} key={tool.id} className={active?.id === tool.id ? "tool active" : "tool"} onClick={(event) => { event.preventDefault(); openTool(tool); }}><span>{tool.name}</span></a>)}</section>; })}</div><nav className="legal-links"><button onClick={() => showHome("privacy-policy")}>Privacy Policy</button><button onClick={() => showHome("terms")}>Terms</button><button onClick={() => showHome("contact")}>Contact</button></nav><div className="install-card"><Smartphone size={32} /><strong>Add Toolly to Home Screen</strong><p>Quick access to your favorite tools.</p><button onClick={() => showHome("bookmarks")}>Add Now</button></div></aside><main className="main-area">{children}</main></div></div>;
+}
+
+function ToolGuide({ id }: { id: string }) {
+  if (id === "heic-jpg") {
+    return <section className="tool-guide"><h3>How to convert a HEIC file to JPG</h3><ol><li>Choose one or more HEIC photos.</li><li>Click Process. The file stays in your browser.</li><li>Download the JPG.</li></ol><h3>Questions</h3><h4>How do I change a photo from HEIC to JPG?</h4><p>Use this HEIC file convert to JPG tool, choose the iPhone photo, then process and download the JPEG.</p><h4>Can this compress HEIC to JPG?</h4><p>The download is a JPEG saved at reduced quality, so the HEIC photo usually comes out as a smaller JPG.</p><h4>Which browser can open HEIC?</h4><p>Safari decodes HEIC most reliably. If this browser cannot read the file, the tool will tell you.</p></section>;
+  }
+  if (id === "timezone") {
+    return <section className="tool-guide"><h3>How to convert UTC to EST</h3><ol><li>Enter the date and time.</li><li>Set From timezone to UTC.</li><li>Set To timezone to America/New_York.</li></ol><p>This UTC to EST converter uses US Eastern Time. Winter dates show EST (UTC−5). Summer dates show EDT (UTC−4). Type America/New_York, not the abbreviation EST.</p></section>;
+  }
+  if (id === "timestamp") {
+    return <section className="tool-guide"><h3>How to use this Unix date converter</h3><ol><li>Paste a Unix timestamp in seconds.</li><li>Read the local date and the ISO date.</li><li>Leave the field as-is to see the current Unix time.</li></ol><h3>Questions</h3><h4>What does a Unix date converter do?</h4><p>It turns a Unix timestamp, counted in seconds from 1 January 1970 UTC, into a readable local date and an ISO date.</p><h4>Can I paste milliseconds?</h4><p>Use seconds. A millisecond value is 1000 times too large for this converter.</p></section>;
+  }
+  if (id === "uuid") {
+    return <section className="tool-guide"><h3>How to use this UUID generator</h3><ol><li>Six random UUID v4 values appear when the page opens.</li><li>Click Generate again for a new set.</li><li>Copy the identifier you need.</li></ol><h3>Questions</h3><h4>Is this a random UUID generator?</h4><p>Yes. It uses the browser random UUID function, which returns version 4 identifiers.</p><h4>Can it create UUID v5 or v7?</h4><p>No. This online UUID generator only creates random UUID v4 values.</p></section>;
+  }
+  if (id === "roi") {
+    return <section className="tool-guide"><h3>How to use this ROI calculator</h3><ol><li>Enter the initial investment.</li><li>Enter the final value.</li><li>Read the net return and the ROI percentage.</li></ol><p>Net return = final value − initial investment. ROI = net return ÷ initial investment × 100. An investment of $1,000 that becomes $1,250 has a $250 net return and a 25% ROI.</p><h3>Questions</h3><h4>Does this ROI calculator handle a time period?</h4><p>No. It compares two amounts. It does not annualize the return or model website, email, or real-estate costs.</p></section>;
+  }
+  if (id === "discount") {
+    return <section className="tool-guide"><h3>How to use this discount calculator</h3><ol><li>Enter the original price.</li><li>Enter the discount percent.</li><li>Read the sale price and the amount you save.</li></ol><p>Sale price = original price × (1 − discount ÷ 100). Amount saved = original price × discount ÷ 100. A $50 item at 20% off costs $40, so you save $10.</p><h3>Questions</h3><h4>Does this discount calculator add tax?</h4><p>No. It only applies one percent off the original price.</p><h4>Can it stack a double or triple discount?</h4><p>No. Enter one discount percent at a time.</p></section>;
+  }
+  if (id === "hourly") {
+    return <section className="tool-guide"><h3>How to convert hourly to salary</h3><ol><li>Enter the hourly rate.</li><li>Enter hours per week. Full time is usually 40.</li><li>Enter weeks per year. A full year is usually 52.</li></ol><p>Annual salary = hourly rate × hours per week × weeks per year. The page also shows monthly and weekly pay.</p><p>At 40 hours and 52 weeks, 15 hourly to salary is $31,200, 20 hourly to salary is $41,600, 25 hourly to salary is $52,000, 30 hourly to salary is $62,400, 35 hourly to salary is $72,800, and 40.75 hourly to salary is $84,760.</p><h3>Questions</h3><h4>Can this turn a salary into an hourly rate?</h4><p>No. Enter an hourly rate to get annual, monthly, and weekly salary.</p></section>;
+  }
+  if (id === "pdf-jpg") {
+    return <section className="tool-guide"><h3>How to make a PDF a JPG</h3><ol><li>Choose a PDF file.</li><li>Click Convert to JPG. Each page is rendered in your browser.</li><li>Download a separate JPG for every page.</li></ol><h3>Questions</h3><h4>How do I change a PDF to a JPG file on a Mac?</h4><p>Open this PDF format to JPG tool in Chrome or Safari, choose the PDF, and download the JPG pages. It is not an API.</p></section>;
+  }
+  if (id === "image-pdf") {
+    return <section className="tool-guide"><h3>How to combine JPG to PDF</h3><ol><li>Choose one or more JPG files.</li><li>Click Process.</li><li>Download one PDF. Each JPG is placed on its own page.</li></ol><h3>Questions</h3><h4>Can I merge JPG files into one PDF?</h4><p>Yes. Select several JPG files and this JPG to PDF converter puts them into a single PDF.</p></section>;
+  }
+  if (id === "jpg-png") {
+    return <section className="tool-guide"><h3>How to convert JPG to PNG online</h3><ol><li>Choose one JPG, or several for a batch convert.</li><li>Click Process. The files stay in your browser.</li><li>Download each PNG.</li></ol><h3>Questions</h3><h4>Is this JPG to PNG converter online free?</h4><p>Yes. There is no signup and no upload to a server.</p><h4>Can I batch convert JPG to PNG?</h4><p>Yes. Select multiple JPG files and process them together.</p></section>;
+  }
+  if (id === "png-jpg") {
+    return <section className="tool-guide"><h3>How to convert PNG to JPG on a Mac</h3><ol><li>Open this page in Chrome or Safari on a Mac, iPhone, or any other device.</li><li>Choose one PNG, or several to mass convert PNG to JPG.</li><li>Click Process and download the JPG files.</li></ol><h3>Questions</h3><h4>Can I batch convert PNG to JPG?</h4><p>Yes. Select multiple PNG files at once.</p><h4>What happens to a transparent background?</h4><p>JPG does not support transparency. Transparent pixels are saved on a white background.</p></section>;
+  }
+  if (id === "webp-jpg") {
+    return <section className="tool-guide"><h3>How to save a WebP as JPG</h3><ol><li>Choose one WebP, or several for a batch convert.</li><li>Click Process. The files stay in your browser.</li><li>Download each JPG.</li></ol><h3>Questions</h3><h4>Is this WebP to JPG converter free?</h4><p>Yes. There is no signup and no upload to a server.</p><h4>Can I bulk convert WebP to JPG?</h4><p>Yes. Select multiple WebP files and process them together.</p></section>;
+  }
+  if (id === "color") {
+    return <section className="tool-guide"><h3>How to use this HEX to RGB converter</h3><ol><li>Enter a HEX code, such as #6B4DF6, or pick a color.</li><li>Read the RGB values and the HSL values.</li></ol><h3>Questions</h3><h4>How do I convert a hex code to RGB?</h4><p>Paste the hex code into this HEX to RGB converter. It splits the code into red, green, and blue from 0 to 255.</p><h4>Can I type an RGB color to get HEX?</h4><p>No. The input is a HEX code. The result shows RGB and HSL.</p></section>;
+  }
+  if (id === "meeting") {
+    return <section className="tool-guide"><h3>How to use the meeting cost calculator</h3><ol><li>Enter how many people are in the meeting.</li><li>Enter the average hourly cost for one person.</li><li>Enter the length in minutes.</li></ol><p>Cost = people × hourly cost × hours. The page also shows the cost per minute.</p><h3>Questions</h3><h4>What does a cost of meeting calculator measure?</h4><p>It turns attendance, pay, and duration into one number, so you can see what the meeting costs before you book it.</p><h4>Does this connect to Google Calendar?</h4><p>No. Type the people, rate, and minutes yourself. It does not read your calendar.</p></section>;
+  }
+  return null;
 }
 
 function SectionTitle({ title, action, onAction }: { title: string; action?: string; onAction?: () => void }) {
